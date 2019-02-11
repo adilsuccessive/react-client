@@ -1,0 +1,54 @@
+.container {
+    border: 1px solid lightgray;
+    margin: 50px;
+    box-shadow: 5px 8px 8px #888888;
+  }
+.container--header {
+    display: flex;
+    height: 35px;
+}
+.container--lower {
+    display: flex;
+    border-top: 1px solid lightgray;
+    height: 35px;
+}
+#checkout {
+    font-weight: bold;
+    flex: 6;
+}
+#shipping {
+    flex: 25;
+    padding: 10px;
+}
+#icon {
+    flex: 0.5;
+    align-items: center;
+}
+#iconId {
+    padding: 10px;
+}
+
+#payment {
+    flex-grow: 3;
+}
+#cart {
+    flex-grow: 2;
+    background: lightgray;
+}
+#list li:after {
+    padding: 5px;
+    content: "/";
+    color: grey;
+}
+#list li:last-child:after {
+    content: "";
+}
+#list li{
+    display: inline;
+}
+p {
+    padding: 10px;
+}
+#payment {
+    font-weight: 10px; 
+}
