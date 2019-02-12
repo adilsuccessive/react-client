@@ -5,12 +5,9 @@
   }
 .container--header {
     display: flex;
-    height: 35px;
 }
-.container--lower {
+.co-lower {
     display: flex;
-    border-top: 1px solid lightgray;
-    height: 35px;
 }
 #checkout {
     font-weight: bold;
@@ -28,12 +25,17 @@
     padding: 10px;
 }
 
-#payment {
-    flex-grow: 3;
+.payment {
+    border-top: 1px solid lightgray;
+    flex:3;
 }
-#cart {
-    flex-grow: 2;
-    background: lightgray;
+.co-lower--cards > *{
+    padding: 30px;
+
+}
+.cart {
+    flex: 2;
+    background: #f7f7f7;
 }
 #list li:after {
     padding: 5px;
@@ -50,5 +52,77 @@ p {
     padding: 10px;
 }
 #payment {
-    font-weight: 10px; 
+    font-weight: bold; 
+}
+.wallet {
+    padding: 25px 10px 1px ;
+    color:gray;
+    font-weight: bold;
+}
+.card > * {
+    font-size: 12px;
+    border: 1px solid lightgray;
+    border-radius: 2px; 
+    padding:8px;
+    margin: 3px;
+}
+.card {
+    padding: 20px 250px;  
+}
+.button > * {
+    background-color: #4CAF50;
+    text-align: center;
+    display: inline-block;
+    font-size: 15px;
+    width: 238px;
+    margin: 0.75px;
+    cursor: pointer;
+    padding: 8px;
+    font-size: 12px;
+    }
+.button {
+    padding-left: 250px;
+    padding-bottom: 30px;
+}
+hr {
+    margin: 5px 10px;
+}
+.items > * {
+    border: 5px solid lightgray;
+}
+.item {
+    padding-top: 25px;
+    padding-left: 10px;
+}
+.hardCase {
+    display: flex;
+}
+.mobileHolder {
+    display: flex;
+}
+.rado {
+    display: flex;
+}
+.usb {
+    display: flex;
+}
+h3 {
+    font-weight: bold;
+    color: grey;
+    padding-left:8px;
+}
+h4 {
+    font-size: 12px;
+    color: grey;
+    font-style: italic;
+    padding-left: 8px;
+}
+h5 {
+    font-size: 12px;
+    color: grey;
+    font-weight: bold;
+    padding-left: 8px;
+}
+.demo { 
+    align-items: right;
 }
