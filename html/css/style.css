@@ -64,7 +64,7 @@
     flex-direction: column;
     background-color: #F7F7F7;
 }
-h1 {
+.first {
     padding: 7px;
 }
 .image--cards {
@@ -126,22 +126,22 @@ hr {
 .image div {
     margin: 40px;
 }
-h2 {
+.second {
     padding-top: 7px;
     color: #464545;
     font-weight: bold;
 }
-h3 {
+.third {
     font-size: 12px;
     padding-top: 15px;
     color: #464545;
     font-style: italic;
 }
-h4 {
+.fourth {
     font-size: 12px;
     color: #464545;
 }
-h5 {
+.fifth {
     text-align: right;
     font-size: 12px;
     color: #464545;
@@ -153,7 +153,7 @@ h5 {
 .items-subtotal div {
     flex: 1;
 }
-h6 {
+.sixth {
     padding: 5px;
     font-size: 12px;
     color: rgb(70, 69, 69);
