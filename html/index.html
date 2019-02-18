@@ -15,23 +15,118 @@
     />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
-  <body>
-    <div class="container">
-      <div class="container--header">
-        <div id="checkout"><p>Checkout</p></div>
-        <div id="shipping">
-          <ul id="list">
-            <li>Shipping</li>
-            <li id="payment">Payment Method</li>
-            <li>Confirmation</li>
-          </ul>
+    <body>
+      <div class="container">
+        <div class="co-block">
+          <div class="co-block--upper">
+            <div class="header--title">
+              <h1 class="header--title__checkout">Checkout</h1>
+            </div>
+            <div class="header--list">
+              <ul class="breadcrumbs">
+                <li>Shipping</li>
+                <li class="breadcrumbs--active">Payment Method</li>
+                <li>Confirmation</li>
+              </ul>
+            </div>
+            <div class="header--icon__close">
+              <i class="fa fa-window-close"></i>
+            </div>
+          </div>
+          <div class="co-block--lower">
+            <div class="block--lower__payment">
+              <p class="head-title">Wallet</p>
+              <hr>
+              <div class="image">
+                <div>
+                  <img class="image--cards" src="images/cards/discover.png">
+                  <p class="card-end-digit">Ending with 8899</p>
+                </div>
+                <div class="image--active">
+                  <img class="image--cards" src="images/cards/mastercard.png">
+                  <p class="card-end-digit">Ending with 8899</p>
+                </div>
+                <div>
+                  <img class="image--cards" src="images/cards/visa.png">
+                  <p class="card-end-digit">Ending with 8899</p>
+                </div>
+              </div>
+              <div class="card-details">
+                <p class="head-title">New Card</p>
+                <hr>
+                <div class="card-details--name">
+                  <input id="card-detail" type="text" placeholder="Name on Card">
+                </div>
+                <div class="card-details--number">
+                  <input id="card-detail" type="text" placeholder="XXXX-XXXX-XXXX-XXXX">
+                </div>
+                <div class="card-details--date-cvv">
+                  <input id="card-data" type="text" placeholder="MM/YY">
+                  <input id="card-data" type="text" placeholder="CVV">
+                </div>
+                <div class="card-details--submit">
+                  <input id="card-submit" type="submit" value="CONTINUE">
+                </div>
+              </div>
+            </div>
+            <div class="block--lower__cart">
+              <div class="items-mobile">
+                <img class="image--products" src="images/products/mobile-holder.jpg" align="left">
+                <p class="item-name">Mobile Holder</p>
+                <p class="item-color">Black</p>
+                <p class="item-quantity">Quantity:1</p>
+                <p class="item-price">$ 10.00</p>
+                <hr>
+              </div>
+              <div class="items-rado">
+                <img class="image--products" src="images/products/rado.jpg" align="left">
+                <p class="item-name"2>Rado Watch</p>
+                <p class="item-color">Black</p>
+                <p class="item-quantity">Quantity:1</p>
+                <p class="item-price">$ 10.00</p>
+                <hr>
+              </div>
+              <div class="items-usb">
+                <img class="image--products" src="images/products/usb-c-2-micro.jpeg" align="left">
+                <p class="item-name">C Type to Micro Converter</p>
+                <p class="item-color">Black</p>
+                <p class="item-quantity">Quantity:1</p>
+                <p class="item-price">$ 10.00</p>
+                <hr>
+              </div>
+              <div class="items-case">
+                <img class="image--products" src="images/products/hard-case.jpg" align="left">
+                <p class="item-name">Mobile Case</p>
+                <p class="item-color">Black</p>
+                <p class="item-quantity">Quantity:1</p>
+                <p class="item-price">$ 10.00</p>
+                <br><br><br>
+                <hr>
+              </div>
+              <div class="items-subtotal">
+                <div>
+                  <p class="item-total">Sub-Total</p>
+                  <p class="item-total">Shipping</p>
+                  <p class="item-total">Taxes</p>
+                </div>
+                <div class="items-price">
+                  <p class="item-total">$ 100.00</h6>
+                  <p class="item-total">$ 10.00</p>
+                  <p class="item-total">$ 5.00</p>
+                </div>
+              </div>
+              <hr>
+              <div class="items-total">
+                <div>
+                  <p class="item-total">Total</p>
+                </div>
+                <div class="items-price">
+                  <p class="item-total">$ 115.00</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div id="icon"><i id="iconId" class="fa fa-window-close"></i></div>
       </div>
-      <div class="container--lower">
-        <div id="payment"><p>Payment Block</p></div>
-        <div id="cart"><p>Cart Block</p></div>
-      </div>
-    </div>
-  </body>
+    </body>
 </html>
