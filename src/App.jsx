@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { Demo } from './pages';
+import React from 'react';
+import { TextFieldDemo } from './pages';
 
-class App extends Component {
-  render() {
-    return (Demo)
-  }
-}
+const App = () => (
+  <TextFieldDemo />
+);
 
 export default App;
