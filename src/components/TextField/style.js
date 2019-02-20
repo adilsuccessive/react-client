@@ -3,7 +3,7 @@ const style = {
     border: '1px solid lightgray',
     padding: '9px',
     borderRadius: '4px',
-    width: '98%',
+    width: '97%',
     margin: '2px',
     color: 'black',
   },

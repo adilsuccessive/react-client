@@ -1,10 +1,10 @@
 const style = {
   base: {
     border: '1px solid lightgray',
-    padding: '9px',
+    padding: '10px',
     borderRadius: '4px',
-    width: '98%',
-    margin: '2px',
+    width: '99%',
+    margin: '5px',
     color: 'black',
   },
   error: {

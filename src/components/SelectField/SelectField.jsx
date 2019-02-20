@@ -16,7 +16,7 @@ const SelectField = (props) => {
       <select {...rest} value={value} {...error} style={style.base} onChange={onChange}>
         <option value="">{defaultText}</option>
         {options.map(option => (
-          <option key={option.label} value={option.value}>{option.value}</option>
+          <option value={option.value}>{option.value}</option>
         ))}
       </select>
     </>
