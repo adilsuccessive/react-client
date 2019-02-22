@@ -11,14 +11,21 @@ const SelectField = (props) => {
     defaultText,
     ...rest
   } = props;
+  const errors = (error) ? style.error : {};
   return (
     <>
-      <select {...rest} value={value} {...error} style={style.base} onChange={onChange}>
+      <select
+        {...rest}
+        value={value}
+        style={{ ...style.base, ...errors, color: style.base.color }}
+        onChange={onChange}
+      >
         <option value="">{defaultText}</option>
         {options.map(option => (
           <option value={option.value}>{option.value}</option>
         ))}
       </select>
+      {(error) ? <p style={{ ...errors }}>{ error }</p> : ''}
     </>
   );
 };
