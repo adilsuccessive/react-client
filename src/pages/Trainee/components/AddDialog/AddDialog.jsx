@@ -123,6 +123,29 @@ class AddDialog extends Component {
     return Object.keys(touch).length !== 0;
   }
 
+  renderTextField = (label, value, name, icon, type) => (
+    <TextField
+      label={label}
+      value={value}
+      name={name}
+      type={type}
+      onChange={this.handleChange(name)}
+      fullWidth
+      margin="normal"
+      variant="outlined"
+      onBlur={this.handleBlur(name)}
+      helperText={this.getError(name)}
+      error={this.getError(name)}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            {icon}
+          </InputAdornment>
+        ),
+      }}
+    />
+  )
+
   render() {
     const {
       open,
@@ -145,86 +168,40 @@ class AddDialog extends Component {
           <div className={classes.root}>
             <Grid container spacing={24}>
               <Grid item xs={12}>
-                <TextField
-                  label="Name"
-                  value={name}
-                  onChange={this.handleChange('name')}
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  onBlur={this.handleBlur('name')}
-                  helperText={this.getError('name')}
-                  error={this.getError('name')}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Person />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
+                {this.renderTextField(
+                  'Name',
+                  name,
+                  'name',
+                  <Person />,
+                  'text',
+                )}
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  label="Email Address"
-                  value={email}
-                  onChange={this.handleChange('email')}
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  onBlur={this.handleBlur('email')}
-                  helperText={this.getError('email')}
-                  error={this.getError('email')}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocalPostOffice />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
+                {this.renderTextField(
+                  'Email Address',
+                  email,
+                  'email',
+                  <LocalPostOffice />,
+                  'text',
+                )}
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  label="Password"
-                  value={password}
-                  onChange={this.handleChange('password')}
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  type="password"
-                  onBlur={this.handleBlur('password')}
-                  helperText={this.getError('password')}
-                  error={this.getError('password')}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <VisibilityOff />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
+                {this.renderTextField(
+                  'Password',
+                  password,
+                  'password',
+                  <VisibilityOff />,
+                  'password',
+                )}
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  label="Confirm Password"
-                  value={confirmPassword}
-                  type="password"
-                  onChange={this.handleChange('confirmPassword')}
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  onBlur={this.handleBlur('confirmPassword')}
-                  helperText={this.getError('confirmPassword')}
-                  error={this.getError('confirmPassword')}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <VisibilityOff />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
+                {this.renderTextField(
+                  'Confirm Password',
+                  confirmPassword,
+                  'confirmPassword',
+                  <VisibilityOff />,
+                  'password',
+                )}
               </Grid>
             </Grid>
           </div>
