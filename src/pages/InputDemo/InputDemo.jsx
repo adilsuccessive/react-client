@@ -51,7 +51,6 @@ class InputDemo extends Component {
   }
 
   handleValidate = () => {
-    const parsedErrors = {};
     const {
       value,
       sport,
@@ -66,18 +65,23 @@ class InputDemo extends Component {
       cricket,
     }, { abortEarly: false })
       .then(() => {
-        this.setState({
-          errors: parsedErrors,
-        });
+        this.handleError(null);
       })
       .catch((errors) => {
-        errors.inner.forEach((error) => {
-          parsedErrors[error.path] = error.message;
-        });
-        this.setState({
-          errors: parsedErrors,
-        });
+        this.handleError(errors);
       });
+  }
+
+  handleError = (errors) => {
+    const parsedErrors = {};
+    if (errors) {
+      errors.inner.forEach((error) => {
+        parsedErrors[error.path] = error.message;
+      });
+    }
+    this.setState({
+      errors: parsedErrors,
+    });
   }
 
   getError = (field) => {
@@ -100,9 +104,9 @@ class InputDemo extends Component {
     return Object.keys(touch).length !== 0;
   }
 
-  handleNameChange = (event) => {
+  handleChange = field => (event) => {
     this.setState({
-      value: event.target.value,
+      [field]: event.target.value,
     }, () => this.handleValidate());
   }
 
@@ -111,14 +115,6 @@ class InputDemo extends Component {
       sport: event.target.value,
       cricket: '',
       football: '',
-    }, () => this.handleValidate());
-  }
-
-  handlePositionChange = (event) => {
-    const { sport } = this.state;
-    this.setState({
-      cricket: (sport === CRICKET) ? event.target.value : '',
-      football: (sport === FOOTBALL) ? event.target.value : '',
     }, () => this.handleValidate());
   }
 
@@ -135,7 +131,7 @@ class InputDemo extends Component {
         <RadioGroup
           value={cricket}
           options={CRICKETOPTIONS}
-          onChange={this.handlePositionChange}
+          onChange={this.handleChange('cricket')}
           onBlur={this.handleBlur('cricket')}
           error={this.getError('cricket')}
         />
@@ -156,7 +152,7 @@ class InputDemo extends Component {
         <RadioGroup
           value={football}
           options={FOOTBALLOPTIONS}
-          onChange={this.handlePositionChange}
+          onChange={this.handleChange('football')}
           onBlur={this.handleBlur('football')}
           error={this.getError('football')}
         />
@@ -172,7 +168,7 @@ class InputDemo extends Component {
         <h3>Name</h3>
         <TextField
           value={value}
-          onChange={this.handleNameChange}
+          onChange={this.handleChange('value')}
           onBlur={this.handleBlur('value')}
           error={this.getError('value')}
         />
