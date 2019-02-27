@@ -9,7 +9,6 @@ const style = {
   },
   error: {
     color: 'red',
-    fontWeight: 'bold',
     borderColor: 'red',
   },
 };

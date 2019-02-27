@@ -8,7 +8,8 @@
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-scripts": "2.1.5",
-    "yarn": "^1.13.0"
+    "yarn": "^1.13.0",
+    "yup": "^0.26.10"
   },
   "scripts": {
     "start": "react-scripts start",

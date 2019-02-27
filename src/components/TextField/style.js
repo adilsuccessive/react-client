@@ -7,9 +7,8 @@ const style = {
     margin: '2px',
     color: 'black',
   },
-  err: {
+  error: {
     color: 'red',
-    fontWeight: 'bold',
     borderColor: 'red',
   },
 };
