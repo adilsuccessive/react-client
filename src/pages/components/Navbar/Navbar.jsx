@@ -15,6 +15,9 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
+  button: {
+    marginLeft: theme.spacing.unit * 2,
+  },
 });
 
 const Navbar = (props) => {
@@ -30,12 +33,12 @@ const Navbar = (props) => {
           <Button color="inherit" disableRipple>TextField Demo</Button>
           <Button color="inherit" disableRipple>Input Demo</Button>
           <Button color="inherit" disableRipple>Children Demo</Button>
-          <Button color="inherit" disableRipple>LOGOUT</Button>
+          <Button color="inherit" disableRipple className={classes.button}>LOGOUT</Button>
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+};
 
 Navbar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
