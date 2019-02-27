@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Grid from '@material-ui/core/Grid';
-import Person from '@material-ui/icons/Person';
-import LocalPostOffice from '@material-ui/icons/LocalPostOffice';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import {
+  Dialog, DialogActions, DialogContent, DialogContentText,
+  DialogTitle, TextField, Button, InputAdornment, Grid,
+} from '@material-ui/core';
+import { Person, LocalPostOffice, VisibilityOff } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import * as yup from 'yup';
 
@@ -68,7 +61,6 @@ class AddDialog extends Component {
   }
 
   handleValidate = () => {
-    const parseErrors = {};
     const {
       name,
       email,
@@ -83,18 +75,23 @@ class AddDialog extends Component {
       confirmPassword,
     }, { abortEarly: false })
       .then(() => {
-        this.setState({
-          errors: parseErrors,
-        });
+        this.handleError(null);
       })
       .catch((errors) => {
-        errors.inner.forEach((error) => {
-          parseErrors[error.path] = error.message;
-        });
-        this.setState({
-          errors: parseErrors,
-        });
+        this.handleError(errors);
       });
+  }
+
+  handleError = (errors) => {
+    const parsedErrors = {};
+    if (errors) {
+      errors.inner.forEach((error) => {
+        parsedErrors[error.path] = error.message;
+      });
+    }
+    this.setState({
+      errors: parsedErrors,
+    });
   }
 
   handleChange = field => (event) => {
