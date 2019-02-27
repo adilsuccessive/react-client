@@ -8,20 +8,25 @@ class Math extends Component {
   }
 
     getResult = (first, second, operator) => {
-      if (operator === '+') {
-        return first + second;
+      let results;
+      switch (operator) {
+      case '+':
+        results = first + second;
+        break;
+      case '-':
+        results = first - second;
+        break;
+      case '*':
+        results = first * second;
+        break;
+      case '/':
+        results = second === 0 ? 'Infinity' : first / second;
+        break;
+      default:
+        results = 'Invalid Operation';
       }
-      if (operator === '-') {
-        return first - second;
-      }
-      if (operator === '*') {
-        return first * second;
-      }
-      if (operator === '/') {
-        return second === 0 ? 'Infinity' : first / second;
-      }
-      return 'Invalid Operation';
-    };
+      return (results);
+    }
 
     render() {
       const {
