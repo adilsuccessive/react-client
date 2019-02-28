@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -13,8 +14,12 @@ const NotFound = (props) => {
   const { classes } = props;
   return (
     <div className={classes.root} align="center">
-      <h1>Not Found</h1>
-      <p>Seems like the page you are looking after does not exist.</p>
+      <Typography variant="h2" gutterBottom>
+        Not Found
+      </Typography>
+      <Typography component="h2" variant="display1" gutterBottom>
+        Seems like the page you are looking after does not exist.
+      </Typography>
     </div>
   );
 };
