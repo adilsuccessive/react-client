@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import {
+  Card, CardContent, CardMedia, Button, Typography, Link,
+} from '@material-ui/core';
 import moment from 'moment';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import theme from '../../theme';
 import trainees from './data/trainee';
 import { NotFound } from '../NotFound';

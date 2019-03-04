@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import { Table } from '../../components';
 import { AddDialog } from './components';
 import trainees from './data/trainee';
 
@@ -35,6 +36,21 @@ class TraineeList extends Component {
         <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
           ADD TRAINEE
         </Button>
+        <Table
+          id="id"
+          data={trainees}
+          columns={[
+            {
+              field: 'name',
+              label: 'Name',
+              align: 'center',
+            },
+            {
+              field: 'email',
+              label: 'Email Address',
+            },
+          ]}
+        />
         <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
         <ul>
           {this.traineeList(trainees)}
