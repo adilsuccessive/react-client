@@ -15,6 +15,11 @@ const styles = theme => ({
   table: {
     minWidth: 700,
   },
+  row: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default,
+    },
+  },
 });
 
 class Table extends Component {
@@ -23,11 +28,14 @@ class Table extends Component {
   ))
 
   renderTableBody = (rows) => {
-    const { columns } = this.props;
+    const { columns, classes, onSelect } = this.props;
     return rows.map(row => (
-      <TableRow key={row.id}>
+      <TableRow key={row.id} hover onClick={() => onSelect(row.id)} className={classes.row}>
         {columns.map(col => (
-          <TableCell align={col.align}>{row[col.field]}</TableCell>))}
+          <TableCell align={col.align}>
+            {col.format ? col.format(row[col.field]) : row[col.field]}
+          </TableCell>
+        ))}
       </TableRow>
     ));
   }
@@ -60,6 +68,7 @@ Table.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Table);

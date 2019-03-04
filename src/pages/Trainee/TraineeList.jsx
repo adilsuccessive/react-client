@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import moment from 'moment';
 import { Table } from '../../components';
 import { AddDialog } from './components';
 import trainees from './data/trainee';
@@ -9,6 +10,8 @@ import trainees from './data/trainee';
 class TraineeList extends Component {
   state = {
     open: false,
+    orderBy: '',
+    order: 'asc',
   };
 
   handleClickOpen = () => {
@@ -28,9 +31,16 @@ class TraineeList extends Component {
     return list.map(trainee => <li><Link to={`${match.path}/${trainee.id}`}>{trainee.name}</Link></li>);
   }
 
+  getDateFormatted = date => (moment(date).format('dddd MMMM Do YYYY, h:mm:ss a'))
+
+  handleSelect = (id) => {
+    const { match, history } = this.props;
+    return (id ? history.push(`${match.path}/${id}`) : '');
+  }
 
   render() {
-    const { open } = this.state;
+    const { open, orderBy, order } = this.state;
+    this.handleSelect();
     return (
       <>
         <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
@@ -43,13 +53,23 @@ class TraineeList extends Component {
             {
               field: 'name',
               label: 'Name',
-              align: 'center',
             },
             {
               field: 'email',
               label: 'Email Address',
+              format: value => value && value.toUpperCase(),
+            },
+            {
+              field: 'createdAt',
+              label: 'Date',
+              align: 'right',
+              format: this.getDateFormatted,
             },
           ]}
+          orderBy={orderBy}
+          order={order}
+          onSort={this.handleSort}
+          onSelect={this.handleSelect}
         />
         <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
         <ul>
@@ -63,6 +83,7 @@ class TraineeList extends Component {
 
 TraineeList.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default TraineeList;
