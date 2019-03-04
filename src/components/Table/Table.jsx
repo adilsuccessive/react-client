@@ -18,16 +18,19 @@ const styles = theme => ({
 });
 
 class Table extends Component {
-  handleTableHead = column => column.map(val => (
+  renderTableHead = column => column.map(val => (
     <TableCell align={val.align}>{val.label ? val.label : val.field}</TableCell>
   ))
 
-  handleTableBody = rows => rows.map(row => (
-    <TableRow key={row.id}>
-      <TableCell align="center">{row.name}</TableCell>
-      <TableCell>{row.email}</TableCell>
-    </TableRow>
-  ));
+  renderTableBody = (rows) => {
+    const { columns } = this.props;
+    return rows.map(row => (
+      <TableRow key={row.id}>
+        {columns.map(col => (
+          <TableCell align={col.align}>{row[col.field]}</TableCell>))}
+      </TableRow>
+    ));
+  }
 
   render() {
     const {
@@ -41,11 +44,11 @@ class Table extends Component {
         <SampleTable className={classes.table}>
           <TableHead>
             <TableRow>
-              {this.handleTableHead(columns)}
+              {this.renderTableHead(columns)}
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.handleTableBody(data)}
+            {this.renderTableBody(data)}
           </TableBody>
         </SampleTable>
       </Paper>
