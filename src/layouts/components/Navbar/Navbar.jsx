@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -20,35 +20,53 @@ const styles = theme => ({
   },
 });
 
-const Navbar = (props) => {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+const link = [
+  {
+    to: '/',
+    label: 'Trainee',
+  },
+  {
+    to: '/text-field-demo',
+    label: 'Text Field Demo',
+  },
+  {
+    to: 'input-demo',
+    label: 'Input Demo',
+  },
+  {
+    to: 'children-demo',
+    label: 'Children Demo',
+  },
+];
+
+class Navbar extends Component {
+  renderLink = data => (
+    data.map(val => (
+      <Link component={RouterLink} to={val.to} color="inherit" underline="none">
+        <Button color="inherit" disableRipple>{val.label}</Button>
+      </Link>
+    ))
+  )
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" color="inherit" className={classes.grow}>
             Trainee Portal
-          </Typography>
-          <Link component={RouterLink} to="/" color="inherit" underline="none">
-            <Button color="inherit" disableRipple>Trainee</Button>
-          </Link>
-          <Link component={RouterLink} to="/text-field-demo" color="inherit" underline="none">
-            <Button color="inherit" disableRipple>Text Field Demo</Button>
-          </Link>
-          <Link component={RouterLink} to="/input-demo" color="inherit" underline="none">
-            <Button color="inherit" disableRipple>Input Demo</Button>
-          </Link>
-          <Link component={RouterLink} to="/children-demo" color="inherit" underline="none">
-            <Button color="inherit" disableRipple>Children Demo</Button>
-          </Link>
-          <Link component={RouterLink} to="/login" color="inherit" underline="none">
-            <Button color="inherit" disableRipple className={classes.button}>LOGOUT</Button>
-          </Link>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-};
+            </Typography>
+            {this.renderLink(link)}
+            <Link component={RouterLink} to="/login" color="inherit" underline="none">
+              <Button color="inherit" disableRipple className={classes.button}>LOGOUT</Button>
+            </Link>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
+}
 
 Navbar.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
