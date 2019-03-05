@@ -38,6 +38,18 @@ class TraineeList extends Component {
     return (id ? history.push(`${match.path}/${id}`) : '');
   }
 
+  handleSort = (field) => {
+    const { order, orderBy } = this.state;
+    let newOrder = 'asc';
+    if (orderBy === field && order === 'asc') {
+      newOrder = 'desc';
+    }
+    this.setState({
+      orderBy: field,
+      order: newOrder,
+    });
+  }
+
   render() {
     const { open, orderBy, order } = this.state;
     this.handleSelect();
@@ -72,9 +84,9 @@ class TraineeList extends Component {
           onSelect={this.handleSelect}
         />
         <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
-        <ul>
+        {/* <ul>
           {this.traineeList(trainees)}
-        </ul>
+        </ul> */}
       </>
 
     );
