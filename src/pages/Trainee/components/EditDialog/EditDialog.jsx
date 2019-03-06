@@ -16,10 +16,15 @@ const styles = theme => ({
 });
 
 class EditDialog extends Component {
-  state = {
-    name: '',
-    email: '',
-  };
+  constructor(props) {
+    super(props);
+    const { traineeData } = props;
+    console.log(traineeData);
+    this.state = {
+      name: '',
+      email: '',
+    };
+  }
 
   handleSubmit = () => {
     const {
@@ -45,7 +50,6 @@ class EditDialog extends Component {
       label={label}
       value={value}
       name={name}
-      defaultValue="name"
       type={type}
       onChange={this.handleChange(name)}
       fullWidth

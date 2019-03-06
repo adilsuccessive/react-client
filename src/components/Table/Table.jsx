@@ -72,7 +72,7 @@ renderTableHead = (column) => {
             {col.format ? col.format(row[col.field]) : row[col.field]}
           </TableCell>
         ))}
-        {actions && <TableCell>{actions.map(data => <Button size="small" onClick={data.handler}>{data.icon}</Button>)}</TableCell>}
+        {actions && <TableCell>{actions.map(data => <Button size="small" onClick={() => data.handler(row)}>{data.icon}</Button>)}</TableCell>}
       </TableRow>
     ));
   }
@@ -86,8 +86,6 @@ renderTableHead = (column) => {
       page,
       rowsPerPage,
       onChangePage,
-
-
     } = this.props;
 
     return (

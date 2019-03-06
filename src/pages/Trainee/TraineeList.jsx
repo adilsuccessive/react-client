@@ -10,6 +10,8 @@ import { AddDialog, EditDialog, RemoveDialog } from './components';
 import trainees from './data/trainee';
 
 class TraineeList extends Component {
+  traineeData = {}
+
   state = {
     open: false,
     edit: false,
@@ -59,7 +61,8 @@ class TraineeList extends Component {
     this.setState({ page });
   }
 
-  handleEditDialogOpen = () => {
+  handleEditDialogOpen = (data) => {
+    this.traineeData = data;
     this.setState({ edit: true });
   }
 
@@ -139,7 +142,7 @@ class TraineeList extends Component {
           onChangePage={this.handleChangePage}
         />
         <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
-        <EditDialog open={edit} onClose={this.handleEditClose} onSubmit={this.handleEditSubmit} />
+        <EditDialog open={edit} onClose={this.handleEditClose} onSubmit={this.handleEditSubmit} traineeData={this.traineeData} />
         <RemoveDialog open={remove} onClose={this.handleRemoveClose} onSubmit={this.handleRemoveSubmit} />
         {/* <ul>
           {this.traineeList(trainees)}
