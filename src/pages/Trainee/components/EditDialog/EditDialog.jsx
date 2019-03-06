@@ -16,15 +16,10 @@ const styles = theme => ({
 });
 
 class EditDialog extends Component {
-  constructor(props) {
-    super(props);
-    const { traineeData } = props;
-    console.log(traineeData);
-    this.state = {
+    state = {
       name: '',
       email: '',
     };
-  }
 
   handleSubmit = () => {
     const {
@@ -32,10 +27,14 @@ class EditDialog extends Component {
       email,
     } = this.state;
 
-    const { onSubmit } = this.props;
+    const { onSubmit, traineeData } = this.props;
     onSubmit({
-      name,
-      email,
+      name: (name !== '') ? name : traineeData.name,
+      email: (email !== '') ? email : traineeData.email,
+    });
+    this.setState({
+      name: '',
+      email: '',
     });
   }
 
@@ -48,7 +47,7 @@ class EditDialog extends Component {
   renderTextField = (label, value, name, icon, type) => (
     <TextField
       label={label}
-      value={value}
+      defaultValue={value}
       name={name}
       type={type}
       onChange={this.handleChange(name)}
@@ -70,12 +69,8 @@ class EditDialog extends Component {
       open,
       onClose,
       classes,
+      traineeData,
     } = this.props;
-
-    const {
-      email,
-      name,
-    } = this.state;
 
     return (
       <Dialog open={open} onClose={onClose} fullWidth>
@@ -87,7 +82,7 @@ class EditDialog extends Component {
               <Grid item xs={12}>
                 {this.renderTextField(
                   'Name',
-                  name,
+                  traineeData.name,
                   'name',
                   <Person />,
                   'text',
@@ -96,7 +91,7 @@ class EditDialog extends Component {
               <Grid item xs={12}>
                 {this.renderTextField(
                   'Email Address',
-                  email,
+                  traineeData.email,
                   'email',
                   <LocalPostOffice />,
                   'text',
@@ -128,6 +123,7 @@ EditDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  traineeData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default withStyles(styles)(EditDialog);

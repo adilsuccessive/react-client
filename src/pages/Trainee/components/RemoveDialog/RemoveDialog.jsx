@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -14,71 +14,39 @@ const styles = theme => ({
   },
 });
 
-class RemoveDialog extends Component {
-  state = {
-    name: '',
-    email: '',
-  };
+const RemoveDialog = (props) => {
+  const {
+    open,
+    onClose,
+    onSubmit,
+  } = props;
 
-  handleSubmit = () => {
-    const {
-      name,
-      email,
-    } = this.state;
-
-    const { onSubmit } = this.props;
-    onSubmit({
-      name,
-      email,
-    });
-  }
-
-  handleChange = field => (event) => {
-    this.setState({
-      [field]: event.target.value,
-    });
-  }
-
-  render() {
-    const {
-      open,
-      onClose,
-      classes,
-    } = this.props;
-
-    const {
-      email,
-      name,
-    } = this.state;
-
-    return (
-      <Dialog open={open} onClose={onClose} fullWidth>
-        <DialogTitle>Remove Trainee</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Do you really want to remove the trainee?</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button color="primary" onClick={onClose}>
+  return (
+    <Dialog open={open} onClose={onClose} fullWidth>
+      <DialogTitle>Remove Trainee</DialogTitle>
+      <DialogContent>
+        <DialogContentText>Do you really want to remove the trainee?</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button color="primary" onClick={onClose}>
             Cancel
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={this.handleSubmit}
-          >
+        </Button>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={onSubmit}
+        >
             Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }
-}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
 
 RemoveDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default withStyles(styles)(RemoveDialog);

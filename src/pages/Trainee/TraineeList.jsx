@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -11,6 +10,8 @@ import trainees from './data/trainee';
 
 class TraineeList extends Component {
   traineeData = {}
+
+  removeData = null
 
   state = {
     open: false,
@@ -31,11 +32,6 @@ class TraineeList extends Component {
 
   handleSubmit = () => {
     this.setState({ open: false });
-  }
-
-  traineeList = (list) => {
-    const { match } = this.props;
-    return list.map(trainee => <li><Link to={`${match.path}/${trainee.id}`}>{trainee.name}</Link></li>);
   }
 
   getDateFormatted = date => (moment(date).format('dddd MMMM Do YYYY, h:mm:ss a'))
@@ -66,26 +62,30 @@ class TraineeList extends Component {
     this.setState({ edit: true });
   }
 
-  handleRemoveDialogOpen = () => {
+  handleRemoveDialogOpen = (data) => {
+    this.removeData = data;
     this.setState({ remove: true });
   }
 
   handleEditClose = () => {
     this.setState({ edit: false });
+    this.traineeData = {};
   }
 
   handleEditSubmit = (data) => {
     console.log(data);
     this.setState({ edit: false });
+    this.traineeData = {};
   }
 
   handleRemoveClose = () => {
     this.setState({ remove: false });
   }
 
-  handleRemoveSubmit = (data) => {
-    console.log(data);
+  handleRemoveSubmit = () => {
+    console.log(this.removeData);
     this.setState({ remove: false });
+    this.removeData = null;
   }
 
   render() {
@@ -142,11 +142,17 @@ class TraineeList extends Component {
           onChangePage={this.handleChangePage}
         />
         <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
-        <EditDialog open={edit} onClose={this.handleEditClose} onSubmit={this.handleEditSubmit} traineeData={this.traineeData} />
-        <RemoveDialog open={remove} onClose={this.handleRemoveClose} onSubmit={this.handleRemoveSubmit} />
-        {/* <ul>
-          {this.traineeList(trainees)}
-        </ul> */}
+        <EditDialog
+          open={edit}
+          onClose={this.handleEditClose}
+          onSubmit={this.handleEditSubmit}
+          traineeData={this.traineeData}
+        />
+        <RemoveDialog
+          open={remove}
+          onClose={this.handleRemoveClose}
+          onSubmit={this.handleRemoveSubmit}
+        />
       </>
 
     );
