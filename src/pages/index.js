@@ -3,4 +3,4 @@ export * from './InputDemo';
 export * from './ChildrenDemo';
 export * from './Trainee';
 export * from './Login';
-export * from './components/Navbar';
+export * from './NotFound';

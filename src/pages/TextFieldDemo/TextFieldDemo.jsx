@@ -21,7 +21,7 @@ const TextFieldDemo = () => (
     <h4>A Valid Input</h4>
     <TextField value="Accessible" />
     <h4>An Input with errors</h4>
-    <TextField value="101" err="Could not be greater than" />
+    <TextField value="101" error="Could not be greater than" />
   </div>
 );
 
