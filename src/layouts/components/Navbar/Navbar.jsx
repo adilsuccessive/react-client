@@ -37,16 +37,22 @@ const link = [
     to: 'children-demo',
     label: 'Children Demo',
   },
+  {
+    to: '/login',
+    label: 'LOGOUT',
+    className: 'button',
+  },
 ];
 
 class Navbar extends Component {
-  renderLink = data => (
-    data.map(val => (
+  renderLink = (data) => {
+    const { classes } = this.props;
+    return data.map(val => (
       <Link component={RouterLink} to={val.to} color="inherit" underline="none">
-        <Button color="inherit" disableRipple>{val.label}</Button>
+        <Button color="inherit" disableRipple className={val.className && classes[val.className]}>{val.label}</Button>
       </Link>
-    ))
-  )
+    ));
+  }
 
   render() {
     const { classes } = this.props;
@@ -58,9 +64,6 @@ class Navbar extends Component {
             Trainee Portal
             </Typography>
             {this.renderLink(link)}
-            <Link component={RouterLink} to="/login" color="inherit" underline="none">
-              <Button color="inherit" disableRipple className={classes.button}>LOGOUT</Button>
-            </Link>
           </Toolbar>
         </AppBar>
       </div>
