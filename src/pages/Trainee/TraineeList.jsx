@@ -7,7 +7,6 @@ import moment from 'moment';
 import { Table } from '../../components';
 import { AddDialog, EditDialog, RemoveDialog } from './components';
 import trainees from './data/trainee';
-import { SnackBarProvider } from '../../contexts';
 
 class TraineeList extends Component {
   traineeData = {}
@@ -104,7 +103,6 @@ class TraineeList extends Component {
         <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
           ADD TRAINEE
         </Button>
-        <SnackBarProvider />
         <Table
           id="id"
           data={trainees}
@@ -154,6 +152,7 @@ class TraineeList extends Component {
           open={remove}
           onClose={this.handleRemoveClose}
           onSubmit={this.handleRemoveSubmit}
+          removeData={this.removeData}
         />
       </>
 

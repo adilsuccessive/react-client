@@ -8,6 +8,7 @@ import {
 import { Person, LocalPostOffice, VisibilityOff } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import * as yup from 'yup';
+import { SnackBarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
 
 const styles = theme => ({
   root: {
@@ -204,17 +205,23 @@ class AddDialog extends Component {
           </div>
         </DialogContent>
         <DialogActions>
+
           <Button color="primary" onClick={onClose}>
             Cancel
           </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={this.handleSubmit}
-            disabled={this.hasErrors() || !this.isTouched()}
-          >
+          <SnackBarConsumer>
+            {({ openSnackbar }) => (
+              <Button
+                color="primary"
+                variant="contained"
+                // onClick={this.handleSubmit}
+                onClick={() => { openSnackbar('Trainee Added successfully', 'success'); this.handleSubmit(); }}
+                disabled={this.hasErrors() || !this.isTouched()}
+              >
             Submit
-          </Button>
+              </Button>
+            )}
+          </SnackBarConsumer>
         </DialogActions>
       </Dialog>
     );
