@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import { Person, LocalPostOffice } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
+import { SnackBarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
 
 const styles = theme => ({
   root: {
@@ -104,14 +105,17 @@ class EditDialog extends Component {
           <Button color="primary" onClick={onClose}>
             Cancel
           </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={this.handleSubmit}
-
-          >
-            Submit
-          </Button>
+          <SnackBarConsumer>
+            {({ openSnackbar }) => (
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => { openSnackbar('Trainee Edited successfully', 'success'); this.handleSubmit(); }}
+              >
+                Submit
+              </Button>
+            )}
+          </SnackBarConsumer>
         </DialogActions>
       </Dialog>
     );

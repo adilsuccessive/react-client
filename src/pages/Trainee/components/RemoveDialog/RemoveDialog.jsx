@@ -6,6 +6,8 @@ import {
   DialogTitle, Button,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import moment from 'moment';
+import { SnackBarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
 
 const styles = theme => ({
   root: {
@@ -19,7 +21,11 @@ const RemoveDialog = (props) => {
     open,
     onClose,
     onSubmit,
+    removeData,
   } = props;
+  const checkDate = '2019-02-14T00:00:00.000';
+  const remove = removeData && removeData.createdAt;
+  const chk = moment(checkDate).isBefore(remove);
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
@@ -31,13 +37,18 @@ const RemoveDialog = (props) => {
         <Button color="primary" onClick={onClose}>
             Cancel
         </Button>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={onSubmit}
-        >
+        <SnackBarConsumer>
+          {({ openSnackbar }) => (
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={chk ? () => { openSnackbar('Trainee Deleted successfully', 'success'); onSubmit(); }
+                : () => { openSnackbar('Unable to delete', 'error'); onSubmit(); }}
+            >
             Delete
-        </Button>
+            </Button>
+          )}
+        </SnackBarConsumer>
       </DialogActions>
     </Dialog>
   );
@@ -47,6 +58,7 @@ RemoveDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  removeData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default withStyles(styles)(RemoveDialog);

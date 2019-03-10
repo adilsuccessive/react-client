@@ -152,6 +152,7 @@ class TraineeList extends Component {
           open={remove}
           onClose={this.handleRemoveClose}
           onSubmit={this.handleRemoveSubmit}
+          removeData={this.removeData}
         />
       </>
 
