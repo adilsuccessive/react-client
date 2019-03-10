@@ -16,10 +16,11 @@ const App = () => (
       <Router>
         <Switch>
           <AuthRoute exact path="/login" component={Login} />
-          <PrivateRoute exact path="/" component={Trainee} />
+          {/* <PrivateRoute exact path="/" component={Trainee} /> */}
           <PrivateRoute exact path="/input-demo" component={InputDemo} />
           <PrivateRoute exact path="/text-field-demo" component={TextFieldDemo} />
-          <PrivateRoute path="/children-demo" component={ChildrenDemo} />
+          <PrivateRoute exact path="/children-demo" component={ChildrenDemo} />
+          <PrivateRoute path="/trainee" component={Trainee} />
           <PrivateRoute component={NotFound} />
         </Switch>
       </Router>
