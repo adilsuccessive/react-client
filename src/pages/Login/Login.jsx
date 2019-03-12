@@ -67,7 +67,7 @@ class Login extends Component {
       loading: true,
     });
     const { history } = this.props;
-    const resp = await callApi(email, password);
+    const resp = await callApi(email, password, 'user/login');
     if (resp.data) {
       localStorage.setItem('token', resp.data);
       history.push('/trainee');

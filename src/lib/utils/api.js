@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const callApi = async (email, password) => {
+const callApi = async (email, password, path) => {
   try {
     const response = await axios({
       method: 'post',
-      url: 'https://express-training.herokuapp.com/api/user/login',
+      url: `https://express-training.herokuapp.com/api/${path}`,
       data: {
         email,
         password,
@@ -12,7 +12,6 @@ const callApi = async (email, password) => {
     });
     return (response.data);
   } catch (err) {
-    console.log(err,"insideapi")
     return (err);
   }
 };
