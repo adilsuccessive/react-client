@@ -70,7 +70,7 @@ class Login extends Component {
     const { history } = this.props;
     const resp = await callApi(data, 'post', 'user/login');
     if (resp.data) {
-      localStorage.setItem('token', resp.data);
+      localStorage.setItem('token', resp.data.data);
       history.push('/trainee');
     } else {
       openSnackbar(`${resp}`, 'error');

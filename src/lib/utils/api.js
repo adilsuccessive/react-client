@@ -6,8 +6,9 @@ const callApi = async (data, method, path) => {
       method,
       url: `https://express-training.herokuapp.com/api/${path}`,
       data,
+      headers: { Authorization: localStorage.getItem('token') },
     });
-    return (response.data);
+    return (response);
   } catch (err) {
     return (err);
   }

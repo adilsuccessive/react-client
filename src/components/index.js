@@ -5,3 +5,4 @@ export * from './RadioGroup';
 export * from './Button';
 export * from './Math';
 export * from './Table';
+export * from './HOC';
