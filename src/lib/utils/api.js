@@ -1,14 +1,11 @@
 import axios from 'axios';
 
-const callApi = async (email, password, path) => {
+const callApi = async (data, method, path) => {
   try {
     const response = await axios({
-      method: 'post',
+      method,
       url: `https://express-training.herokuapp.com/api/${path}`,
-      data: {
-        email,
-        password,
-      },
+      data,
     });
     return (response.data);
   } catch (err) {

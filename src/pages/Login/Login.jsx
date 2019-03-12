@@ -63,11 +63,12 @@ class Login extends Component {
 
   handleButtonClick = async (openSnackbar) => {
     const { email, password } = this.state;
+    const data = { email, password };
     this.setState({
       loading: true,
     });
     const { history } = this.props;
-    const resp = await callApi(email, password, 'user/login');
+    const resp = await callApi(data, 'post', 'user/login');
     if (resp.data) {
       localStorage.setItem('token', resp.data);
       history.push('/trainee');
