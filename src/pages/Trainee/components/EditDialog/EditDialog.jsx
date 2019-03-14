@@ -8,6 +8,7 @@ import {
 import { Person, LocalPostOffice } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { SnackBarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
+import callApi from '../../../../lib/utils/api';
 
 const styles = theme => ({
   root: {
@@ -22,17 +23,26 @@ class EditDialog extends Component {
       email: '',
     };
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const {
       name,
       email,
     } = this.state;
 
     const { onSubmit, traineeData } = this.props;
-    onSubmit({
+    console.log(traineeData._id,"iiiddd");
+    this.setState({
       name: (name !== '') ? name : traineeData.name,
       email: (email !== '') ? email : traineeData.email,
     });
+    onSubmit({
+      name,
+      email,
+    });
+    const data = { name, email, id: traineeData._id };
+    const resp = await callApi(data, 'put', 'trainee');
+    console.log(resp,"editresponse")
+    console.log(name,"mmmmmmmmm;l")
     this.setState({
       name: '',
       email: '',
