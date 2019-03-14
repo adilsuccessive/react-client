@@ -3,26 +3,13 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import { Table } from '../../components';
 import { AddDialog, EditDialog, RemoveDialog } from './components';
 import callApi from '../../lib/utils/api';
-import { SnackBarConsumer } from '../../contexts/SnackBarProvider/SnackBarProvider';
-import trainees from './data/trainee';
 
-const styles = theme => ({
-  spinPosition: {
-    marginTop: theme.spacing.unit * 30,
-    marginLeft: theme.spacing.unit * 50,
-    position: 'absolute',
-  },
-});
 class TraineeList extends Component {
   traineeData = {}
-
-  trainee = []
 
   removeData = null
 
@@ -34,7 +21,24 @@ class TraineeList extends Component {
     order: 'asc',
     page: 0,
     loading: false,
+    skip: 0,
+    limit: 10,
+    count: 0,
+    trainee: '',
   };
+
+  componentDidMount = async () => {
+    this.setState({
+      loading: true,
+    });
+    const { skip, limit } = this.state;
+    const resp = await callApi({}, 'get', `trainee?skip=${skip}&limit=${limit}`);
+    this.setState({
+      trainee: resp.data.data.records,
+      count: resp.data.data.count,
+      loading: false,
+    });
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -67,8 +71,18 @@ class TraineeList extends Component {
     });
   }
 
-  handleChangePage = (event, page) => {
-    this.setState({ page });
+  handleChangePage = async (event, page) => {
+    const newSkip = page * 10;
+    const { limit } = this.state;
+    this.setState({
+      page,
+      loading: true,
+    });
+    const resp = await callApi({}, 'get', `trainee?skip=${newSkip}&limit=${limit}`);
+    this.setState({
+      trainee: resp.data.data.records,
+      loading: false,
+    });
   }
 
   handleEditDialogOpen = (data) => {
@@ -102,19 +116,6 @@ class TraineeList extends Component {
     this.removeData = null;
   }
 
-  componentDidMount = async () => {
-    this.setState({
-      loading: true,
-    });
-    const skip = 0;
-    const limit = 10;
-    const resp = await callApi({}, 'get', `trainee?skip=${skip}&limit=${limit}`);
-    this.trainee = this.trainee.concat(resp.data.data.records);
-    this.setState({
-      loading: false,
-    });
-  }
-
   render() {
     const {
       open,
@@ -124,56 +125,55 @@ class TraineeList extends Component {
       order,
       page,
       loading,
+      trainee,
+      count,
     } = this.state;
-    const { classes } = this.props;
     this.handleSelect();
     return (
       <>
         <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
           ADD TRAINEE
         </Button>
-        {(loading) ? <CircularProgress size={24} className={classes.spinPosition} />
-          : (
-            <Table
-              id="id"
-              data={this.trainee}
-              columns={[
-                {
-                  field: 'name',
-                  label: 'Name',
-                },
-                {
-                  field: 'email',
-                  label: 'Email Address',
-                  format: value => value && value.toUpperCase(),
-                },
-                {
-                  field: 'createdAt',
-                  label: 'Date',
-                  align: 'right',
-                  format: this.getDateFormatted,
-                },
-              ]}
-              actions={[
-                {
-                  icon: <EditIcon />,
-                  handler: this.handleEditDialogOpen,
-                },
-                {
-                  icon: <DeleteIcon />,
-                  handler: this.handleRemoveDialogOpen,
-                },
-              ]}
-              orderBy={orderBy}
-              order={order}
-              onSort={this.handleSort}
-              onSelect={this.handleSelect}
-              count={100}
-              page={page}
-              onChangePage={this.handleChangePage}
-            />
-          )
-        }
+        <Table
+          id="id"
+          data={trainee}
+          columns={[
+            {
+              field: 'name',
+              label: 'Name',
+            },
+            {
+              field: 'email',
+              label: 'Email Address',
+              format: value => value && value.toUpperCase(),
+            },
+            {
+              field: 'createdAt',
+              label: 'Date',
+              align: 'right',
+              format: this.getDateFormatted,
+            },
+          ]}
+          actions={[
+            {
+              icon: <EditIcon />,
+              handler: this.handleEditDialogOpen,
+            },
+            {
+              icon: <DeleteIcon />,
+              handler: this.handleRemoveDialogOpen,
+            },
+          ]}
+          orderBy={orderBy}
+          order={order}
+          onSort={this.handleSort}
+          onSelect={this.handleSelect}
+          count={count}
+          dataLength={count}
+          page={page}
+          loading={loading}
+          onChangePage={this.handleChangePage}
+        />
         <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
         <EditDialog
           open={edit}
@@ -198,4 +198,4 @@ TraineeList.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default withStyles(styles)(TraineeList);
+export default TraineeList;
