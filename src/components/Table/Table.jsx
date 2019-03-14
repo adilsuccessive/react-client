@@ -6,6 +6,7 @@ import {
   TableBody, TableCell, TableHead, TableRow, Paper,
   Tooltip, TableSortLabel, TablePagination, Button,
 } from '@material-ui/core';
+import { withLoaderAndMessage } from '../HOC';
 
 const styles = theme => ({
   root: {
@@ -68,7 +69,7 @@ renderTableHead = (column) => {
     return rows.map(row => (
       <TableRow key={row.id} hover className={classes.row}>
         {columns.map(col => (
-          <TableCell align={col.align} onClick={() => onSelect(row.id)}>
+          <TableCell align={col.align} onClick={() => onSelect(row._id)}>
             {col.format ? col.format(row[col.field]) : row[col.field]}
           </TableCell>
         ))}
@@ -87,6 +88,7 @@ renderTableHead = (column) => {
       rowsPerPage,
       onChangePage,
     } = this.props;
+    console.log(data,"ddddddddddddaaaaaatttttttttaaaaaaaaaaa")
 
     return (
       <Paper className={classes.root}>
@@ -147,4 +149,4 @@ Table.propTypes = {
 
 };
 
-export default withStyles(styles)(Table);
+export default withStyles(styles)(withLoaderAndMessage(Table));

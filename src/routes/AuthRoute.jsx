@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { AuthLayout } from '../layouts';
 
 const AuthRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={matchProps => (
-      <AuthLayout>
-        <Component {...matchProps} />
-      </AuthLayout>
+      localStorage.getItem('token') ? (<Redirect to="/trainee" />)
+        : (
+          <AuthLayout>
+            <Component {...matchProps} />
+          </AuthLayout>
+        )
     )}
   />
 );

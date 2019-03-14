@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import moment from 'moment';
 import { Table } from '../../components';
 import { AddDialog, EditDialog, RemoveDialog } from './components';
-import trainees from './data/trainee';
+import callApi from '../../lib/utils/api';
 
 class TraineeList extends Component {
   traineeData = {}
@@ -20,7 +20,25 @@ class TraineeList extends Component {
     orderBy: '',
     order: 'asc',
     page: 0,
+    loading: false,
+    skip: 0,
+    limit: 10,
+    count: 0,
+    trainee: '',
   };
+
+  componentDidMount = async () => {
+    this.setState({
+      loading: true,
+    });
+    const { skip, limit } = this.state;
+    const resp = await callApi({}, 'get', `trainee?skip=${skip}&limit=${limit}`);
+    this.setState({
+      trainee: resp.data.data.records,
+      count: resp.data.data.count,
+      loading: false,
+    });
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -53,8 +71,18 @@ class TraineeList extends Component {
     });
   }
 
-  handleChangePage = (event, page) => {
-    this.setState({ page });
+  handleChangePage = async (event, page) => {
+    const newSkip = page * 10;
+    const { limit } = this.state;
+    this.setState({
+      page,
+      loading: true,
+    });
+    const resp = await callApi({}, 'get', `trainee?skip=${newSkip}&limit=${limit}`);
+    this.setState({
+      trainee: resp.data.data.records,
+      loading: false,
+    });
   }
 
   handleEditDialogOpen = (data) => {
@@ -96,6 +124,9 @@ class TraineeList extends Component {
       orderBy,
       order,
       page,
+      loading,
+      trainee,
+      count,
     } = this.state;
     this.handleSelect();
     return (
@@ -105,7 +136,7 @@ class TraineeList extends Component {
         </Button>
         <Table
           id="id"
-          data={trainees}
+          data={trainee}
           columns={[
             {
               field: 'name',
@@ -137,8 +168,10 @@ class TraineeList extends Component {
           order={order}
           onSort={this.handleSort}
           onSelect={this.handleSelect}
-          count={100}
+          count={count}
+          dataLength={count}
           page={page}
+          loading={loading}
           onChangePage={this.handleChangePage}
         />
         <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
@@ -152,6 +185,7 @@ class TraineeList extends Component {
           open={remove}
           onClose={this.handleRemoveClose}
           onSubmit={this.handleRemoveSubmit}
+          removeData={this.removeData}
         />
       </>
 

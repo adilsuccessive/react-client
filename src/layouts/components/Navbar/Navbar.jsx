@@ -41,15 +41,20 @@ const link = [
     to: '/login',
     label: 'LOGOUT',
     className: 'button',
+    onClick: 'handleLogout',
   },
 ];
 
 class Navbar extends Component {
+  handleLogout = () => {
+    localStorage.removeItem('token');
+  }
+
   renderLink = (data) => {
     const { classes } = this.props;
     return data.map(val => (
       <Link component={RouterLink} to={val.to} color="inherit" underline="none">
-        <Button color="inherit" disableRipple className={val.className && classes[val.className]}>{val.label}</Button>
+        <Button color="inherit" disableRipple onClick={val.onClick && this[val.onClick]} className={val.className && classes[val.className]}>{val.label}</Button>
       </Link>
     ));
   }

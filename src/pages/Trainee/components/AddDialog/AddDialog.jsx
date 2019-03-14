@@ -5,14 +5,20 @@ import {
   Dialog, DialogActions, DialogContent, DialogContentText,
   DialogTitle, TextField, Button, InputAdornment, Grid,
 } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Person, LocalPostOffice, VisibilityOff } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import * as yup from 'yup';
+import callApi from '../../../../lib/utils/api';
+import { SnackBarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing.unit * 2,
+  },
+  spinPosition: {
+    position: 'absolute',
   },
 });
 
@@ -34,20 +40,34 @@ class AddDialog extends Component {
     email: '',
     password: '',
     confirmPassword: '',
+    loading: false,
   };
 
-  handleSubmit = () => {
+  handleSubmit = async (openSnackbar) => {
     const {
       name,
       email,
       password,
     } = this.state;
+    this.setState({
+      loading: true,
+    });
+    const data = { name, email, password };
+    const resp = await callApi(data, 'post', 'trainee');
+    if (resp.data) {
+      openSnackbar(`${resp.status} ${resp.data.message}`, 'success');
+    } else {
+      openSnackbar(`${resp}`, 'error');
+    }
 
     const { onSubmit } = this.props;
     onSubmit({
       name,
       email,
       password,
+    });
+    this.setState({
+      loading: false,
     });
   }
 
@@ -155,6 +175,7 @@ class AddDialog extends Component {
       name,
       password,
       confirmPassword,
+      loading,
     } = this.state;
 
     return (
@@ -204,17 +225,24 @@ class AddDialog extends Component {
           </div>
         </DialogContent>
         <DialogActions>
+
           <Button color="primary" onClick={onClose}>
             Cancel
           </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={this.handleSubmit}
-            disabled={this.hasErrors() || !this.isTouched()}
-          >
+          <SnackBarConsumer>
+            {({ openSnackbar }) => (
+              <Button
+                color="primary"
+                variant="contained"
+                // onClick={this.handleSubmit}
+                onClick={() => this.handleSubmit(openSnackbar)}
+                disabled={(this.hasErrors() || !this.isTouched()) || loading}
+              >
+                {loading && <CircularProgress size={24} className={classes.spinPosition} />}
             Submit
-          </Button>
+              </Button>
+            )}
+          </SnackBarConsumer>
         </DialogActions>
       </Dialog>
     );
