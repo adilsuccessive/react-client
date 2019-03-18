@@ -81,6 +81,7 @@ class TraineeList extends Component {
     const resp = await callApi({}, 'get', `trainee?skip=${newSkip}&limit=${limit}`);
     this.setState({
       trainee: resp.data.data.records,
+      count: resp.data.data.count,
       loading: false,
     });
   }
@@ -102,18 +103,35 @@ class TraineeList extends Component {
 
   handleEditSubmit = (data) => {
     console.log(data);
+    const { page } = this.state;
     this.setState({ edit: false });
     this.traineeData = {};
+    this.handleChangePage('', page);
   }
 
   handleRemoveClose = () => {
     this.setState({ remove: false });
   }
 
-  handleRemoveSubmit = () => {
-    console.log(this.removeData);
+  handleRemoveSubmit = async () => {
+    console.log(this.removeData,"rrrrmmmmoooovvvdaaaataaa");
+    const { page, count } = this.state;
+    console.log(page,"pppppppaaaaaagremove")
+    console.log(count, "ccnntt")
+    console.log((count - 1) % page === 0,"condition");
+    if ((count - 1) % page === 0) {
+      this.setState({
+        page: page - 1,
+      });
+    }
+    const id = this.removeData.originalId;
+    console.log(id,"iiiiiiiddddddddd")
+    const resp = await callApi({}, 'delete', `trainee/${id}`);
+    console.log(page,"afterset")
+    console.log(resp,"deleteResponse")
     this.setState({ remove: false });
     this.removeData = null;
+    this.handleChangePage('', page);
   }
 
   render() {

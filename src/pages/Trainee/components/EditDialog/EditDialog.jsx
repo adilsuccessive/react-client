@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import { Person, LocalPostOffice } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { SnackBarConsumer } from '../../../../contexts/SnackBarProvider/SnackBarProvider';
 import callApi from '../../../../lib/utils/api';
 
@@ -15,43 +16,58 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 2,
   },
+  spinPosition: {
+    position: 'absolute',
+  },
 });
 
 class EditDialog extends Component {
     state = {
       name: '',
       email: '',
+      loading: false,
+      disable: true,
     };
 
-  handleSubmit = async () => {
+  handleSubmit = () => {
     const {
       name,
       email,
     } = this.state;
 
     const { onSubmit, traineeData } = this.props;
-    console.log(traineeData._id,"iiiddd");
     this.setState({
       name: (name !== '') ? name : traineeData.name,
       email: (email !== '') ? email : traineeData.email,
+      loading: true,
     });
     onSubmit({
       name,
       email,
     });
+  }
+
+  handleEdit = async (openSnackbar) => {
+    this.handleSubmit();
+    const { traineeData } = this.props;
+    const { name, email } = this.state;
     const data = { name, email, id: traineeData._id };
     const resp = await callApi(data, 'put', 'trainee');
-    console.log(resp,"editresponse")
-    console.log(name,"mmmmmmmmm;l")
+    if (resp.data) {
+      openSnackbar(`${resp.status} ${resp.data.message}`, 'success');
+    } else {
+      openSnackbar(`${resp}`, 'error');
+    }
     this.setState({
-      name: '',
-      email: '',
+      disable: true,
+      loading: false,
     });
-  }
+  };
 
   handleChange = field => (event) => {
     this.setState({
       [field]: event.target.value,
+      disable: false,
     });
   }
 
@@ -82,6 +98,7 @@ class EditDialog extends Component {
       classes,
       traineeData,
     } = this.props;
+    const { loading, disable } = this.state;
 
     return (
       <Dialog open={open} onClose={onClose} fullWidth>
@@ -120,8 +137,10 @@ class EditDialog extends Component {
               <Button
                 color="primary"
                 variant="contained"
-                onClick={() => { openSnackbar('Trainee Edited successfully', 'success'); this.handleSubmit(); }}
+                disabled={disable}
+                onClick={() => this.handleEdit(openSnackbar)}
               >
+                {loading && <CircularProgress size={24} className={classes.spinPosition} />}
                 Submit
               </Button>
             )}

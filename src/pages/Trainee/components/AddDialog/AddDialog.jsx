@@ -234,7 +234,6 @@ class AddDialog extends Component {
               <Button
                 color="primary"
                 variant="contained"
-                // onClick={this.handleSubmit}
                 onClick={() => this.handleSubmit(openSnackbar)}
                 disabled={(this.hasErrors() || !this.isTouched()) || loading}
               >
